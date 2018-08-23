@@ -1,6 +1,6 @@
 package async_communicator.thread_holder;
 
-public class ThreadResponseHolder{
+public class    ThreadResponseHolder{
     private Object response;
 
     protected ThreadResponseHolder(){
