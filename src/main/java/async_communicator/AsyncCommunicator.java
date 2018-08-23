@@ -64,11 +64,6 @@ public class AsyncCommunicator {
         //OVO TREBA PROVJERITI GDJE I KADA BRISATI OVAJ THREAD ID,OVA METODA SE POZIVA U THREAD CALLERU, PA ZATO MI USPJEVA PROCI,ODNOSNO ZATO USPJEVAM DOBITI RESPONSE
         removeIdThread(Thread.currentThread().getId());
     }
-    public void threadFinished(Long threadId){
-        ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
-        statusHolder.threadFinished();
-    }
-
 
     public boolean hasThreadFinished(Long threadId){
         ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
