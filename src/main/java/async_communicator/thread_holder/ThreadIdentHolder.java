@@ -12,6 +12,7 @@ public class ThreadIdentHolder {
     public void addThread(Long threadId){
         activatedThread.put(threadId,new ThreadStatusHolder());
     }
+
     public ThreadStatusHolder getThreadStatusHolder(Long threadId){
         try{
             return activatedThread.get(threadId);

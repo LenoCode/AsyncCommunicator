@@ -1,17 +1,25 @@
 package async_communicator.thread_holder;
 
-public class    ThreadResponseHolder{
-    private Object response;
+import java.util.HashMap;
+import java.util.Map;
 
-    protected ThreadResponseHolder(){
+public class ThreadResponseHolder{
+    private final Map<Long,Object> threadResponses = new HashMap();
+
+    public ThreadResponseHolder(){
 
     }
-
-    public <B> B getResponse() {
-        return (B) response;
+    public <B> B getResponse(long id) {
+        if (threadResponses.containsKey(id)){
+            B response = (B) threadResponses.get(id);
+            threadResponses.remove(id);
+            return response;
+        }else{
+            return null;
+        }
     }
 
-    public <B> void setResponse(B response) {
-        this.response = response;
+    public <B> void setResponse(long id,B response) {
+        threadResponses.put(id,response);
     }
 }

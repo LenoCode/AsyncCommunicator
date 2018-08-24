@@ -8,11 +8,10 @@ public class ThreadStatusHolder {
     private final int THREAD_FINISHED = 2;
     private final FlagObject flagObject;
     private int currentStatus;
-    private ThreadResponseHolder threadResponseHolder;
+
 
     protected ThreadStatusHolder(){
         currentStatus = THREAD_INITIALIZED;
-        threadResponseHolder = new ThreadResponseHolder();
         flagObject = new FlagObject();
     }
 
@@ -25,14 +24,8 @@ public class ThreadStatusHolder {
     public void threadStarted(){
         currentStatus = THREAD_START;
     }
-    public <A> void addResponseToThread(A threadResponse){
-        threadResponseHolder.setResponse(threadResponse);
-    }
     public void threadFinished(){
         currentStatus = THREAD_FINISHED;
-    }
-    public <A> A getThreadResponse(){
-        return threadResponseHolder.getResponse();
     }
     public void addFlag(String id,boolean flag){
         flagObject.addFlag(id,flag);
