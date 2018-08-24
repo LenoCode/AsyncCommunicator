@@ -4,17 +4,20 @@ package async_communicator;
 import async_communicator.object_holder.DataObjectHolder;
 import async_communicator.object_holder.parameterized_object.ParameterizedObject;
 import async_communicator.thread_holder.ThreadIdentHolder;
+import async_communicator.thread_holder.ThreadResponseHolder;
 import async_communicator.thread_holder.ThreadStatusHolder;
 
 public class AsyncCommunicator {
     private static AsyncCommunicator asyncCommunicator;
 
     private final ThreadIdentHolder threadIdentHolder;
+    private final ThreadResponseHolder threadResponseHolder;
     private final DataObjectHolder dataObjectHolder;
 
     private AsyncCommunicator(){
         threadIdentHolder = new ThreadIdentHolder();
         dataObjectHolder = new DataObjectHolder();
+        threadResponseHolder = new ThreadResponseHolder();
     }
 
     public static AsyncCommunicator getAsyncCommunicator() {
@@ -27,9 +30,6 @@ public class AsyncCommunicator {
     public void initNewThread(Long threadId){
         System.out.println("ADDING THREAD   "+threadId);
         threadIdentHolder.addThread(threadId);
-        ThreadStatusHolder threadStatusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
-
-        System.out.println(threadStatusHolder.hasThreadStarted() +" has trhad started     ");
     }
     public ThreadStatusHolder getThreadStatusHolder(Long threadId){
         return threadIdentHolder.getThreadStatusHolder(threadId);
@@ -42,29 +42,25 @@ public class AsyncCommunicator {
     public <A> A waitThreadForResponse(Long threadId){
         ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
         waitThread(statusHolder);
-        return statusHolder.getThreadResponse();
+        return threadResponseHolder.getResponse(threadId);
     }
     public void waitThreadToFinish(Long threadId){
         ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
         waitThread(statusHolder);
     }
 
-    public void addResponseToFinishedThread(Long threadId, Object response){
-        ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
-        statusHolder.addResponseToThread(response);
+    public <A> void addResponseToFinishedThread(Long threadId,A response){
+        threadResponseHolder.setResponse(threadId,response);
     }
-    public void addResponseToCurrentThread(Object response){
-        ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(Thread.currentThread().getId());
-        statusHolder.addResponseToThread(response);
+    public <A> void addResponseToCurrentThread(A response){
+        threadResponseHolder.setResponse(Thread.currentThread().getId(),response);
     }
     public void threadFinished(){
         System.out.println("THREAD FINISHED   "+Thread.currentThread().getId());
         ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(Thread.currentThread().getId());
         statusHolder.threadFinished();
-        //OVO TREBA PROVJERITI GDJE I KADA BRISATI OVAJ THREAD ID,OVA METODA SE POZIVA U THREAD CALLERU, PA ZATO MI USPJEVA PROCI,ODNOSNO ZATO USPJEVAM DOBITI RESPONSE
         removeIdThread(Thread.currentThread().getId());
     }
-
     public boolean hasThreadFinished(Long threadId){
         ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
         return statusHolder.hasThreadFinished();
@@ -77,8 +73,6 @@ public class AsyncCommunicator {
     public void removeIdThread(Long threadId){
         threadIdentHolder.removeThreadId(threadId);
     }
-
-
 
 
     public <A> void addParameterizedObject(String id,Object object ){
