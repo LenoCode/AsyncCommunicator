@@ -61,6 +61,11 @@ public class AsyncCommunicator {
         statusHolder.threadFinished();
         removeIdThread(Thread.currentThread().getId());
     }
+    public void threadFinished(Long threadId){
+        ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
+        statusHolder.threadFinished();
+        removeIdThread(Thread.currentThread().getId());
+    }
     public boolean hasThreadFinished(Long threadId){
         ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
         return statusHolder.hasThreadFinished();
