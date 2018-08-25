@@ -120,6 +120,9 @@ public class AsyncCommunicator {
 
 
     private void waitThread(ThreadStatusHolder statusHolder){
+        if (statusHolder == null){
+            return;
+        }
         while(!statusHolder.hasThreadFinished()){
             continue;
         }
