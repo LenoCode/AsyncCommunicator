@@ -15,6 +15,10 @@ public class ParameterizedObjectList {
     }
 
     public void addParameterizedObject(ParameterizedObject parameterizedObject){
+        String id = parameterizedObject.getId();
+        if (containsId(id)){
+            removeParameterizedObject(id);
+        }
         parameterizedObjectList.add(parameterizedObject);
     }
 
@@ -33,6 +37,16 @@ public class ParameterizedObjectList {
 
     public void resetList(){
         parameterizedObjectList.clear();
+    }
+
+
+    private boolean containsId(String  id){
+        for (ParameterizedObject parameterizedObject : parameterizedObjectList){
+            if (parameterizedObject.getId().equals(id)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private ParameterizedObject searchForObject(String id){
