@@ -7,6 +7,8 @@ import async_communicator.thread_holder.ThreadIdentHolder;
 import async_communicator.thread_holder.ThreadResponseHolder;
 import async_communicator.thread_holder.ThreadStatusHolder;
 
+import java.sql.SQLOutput;
+
 public class AsyncCommunicator {
     private static AsyncCommunicator asyncCommunicator;
 
@@ -44,9 +46,7 @@ public class AsyncCommunicator {
         waitThread(statusHolder);
         return threadResponseHolder.getResponse(threadId);
     }
-    public <A> A getThreadResponse(Long threadId){
-        return threadResponseHolder.getResponse(threadId);
-    }
+
     public void waitThreadToFinish(Long threadId){
         ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
         waitThread(statusHolder);
