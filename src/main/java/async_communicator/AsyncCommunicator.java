@@ -44,6 +44,9 @@ public class AsyncCommunicator {
         waitThread(statusHolder);
         return threadResponseHolder.getResponse(threadId);
     }
+    public <A> A getThreadResponse(Long threadId){
+        return threadResponseHolder.getResponse(threadId);
+    }
     public void waitThreadToFinish(Long threadId){
         ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
         waitThread(statusHolder);
