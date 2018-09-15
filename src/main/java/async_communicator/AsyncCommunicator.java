@@ -112,6 +112,15 @@ public class AsyncCommunicator {
             continue;
         }
     }
+    public boolean waitForFlagAndRemove(Long threadId,String id){
+        ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
+        while(!statusHolder.containsFlag(id)){
+            continue;
+        }
+        boolean flag = statusHolder.getFlag(id);
+        statusHolder.removeFlag(id);
+        return flag;
+    }
     public boolean checkIfFlagExists(Long threadId,String id){
         ThreadStatusHolder statusHolder = threadIdentHolder.getThreadStatusHolder(threadId);
         return statusHolder.containsFlag(id);

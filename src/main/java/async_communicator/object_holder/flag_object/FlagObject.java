@@ -20,6 +20,11 @@ public class FlagObject {
     public boolean checkIfFlagExist(String id){
         return flags.containsKey(id);
     }
+    public void removeFlag(String id){
+        if (flags.containsKey(id)){
+            flags.remove(id);
+        }
+    }
     public boolean getFlag(String id){
         if (flags.containsKey(id)){
             boolean flag = flags.get(id);

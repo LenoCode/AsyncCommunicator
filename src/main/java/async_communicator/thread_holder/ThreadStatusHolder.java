@@ -33,6 +33,9 @@ public class ThreadStatusHolder {
     public boolean containsFlag(String id){
         return flagObject.checkIfFlagExist(id);
     }
+    public void removeFlag(String id){
+        flagObject.removeFlag(id);
+    }
     public boolean getFlag(String id){
         return flagObject.getFlag(id);
     }
